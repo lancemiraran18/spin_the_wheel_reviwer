@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10152d">
+<title>Spin the Wheel Reviewer | IT311 Cyber Security Threats</title>
+<style>
+:root{--bg:#0b1022;--panel:#151d37;--panel2:#1b2544;--line:rgba(255,255,255,.12);--mint:#77f3c3;--violet:#a99bff;--yellow:#ffd166;--coral:#ff7897;--text:#f7f8ff;--muted:#aab3d0;--dark:#17203a;--ink:#252a43;--paper:#f8f9ff;--shadow:0 24px 70px rgba(0,0,0,.26)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--text);font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:radial-gradient(ellipse at 5% 0%,rgba(92,86,190,.27),transparent 34%),radial-gradient(ellipse at 100% 20%,rgba(31,185,158,.13),transparent 30%),var(--bg);overflow-x:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+button:disabled{opacity:.48;cursor:not-allowed;transform:none!important;filter:none!important}
+.app{width:min(1220px,calc(100% - 36px));margin:0 auto;padding:26px 0 38px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{width:48px;height:48px;flex:0 0 auto;display:grid;place-items:center;border-radius:16px;background:linear-gradient(135deg,#7cf4c5,#98a0ff);color:#10172b;font-size:26px;box-shadow:0 8px 30px rgba(124,244,197,.16);transform:rotate(-7deg)}
+.brand-title{font:700 16px 'Trebuchet MS','Segoe UI',sans-serif;letter-spacing:.04em}
+.brand-sub{margin-top:3px;font-size:11px;color:var(--muted);letter-spacing:.13em;text-transform:uppercase}
+.top-actions{display:flex;align-items:center;gap:9px}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(255,255,255,.045);padding:9px 12px;border-radius:999px;color:#e8eaff;font-size:12px;font-weight:700;white-space:nowrap}
+.pill-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
+.icon-btn{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;border:1px solid var(--line);color:white;background:#ffffff0a;font-size:17px;transition:background .2s,transform .2s}
+.icon-btn:hover{background:#ffffff18;transform:translateY(-2px)}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--mint);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.19em;margin-bottom:11px}
+.eyebrow:before{content:'';display:block;width:23px;height:2px;background:var(--mint);border-radius:4px}
+h1{font:700 clamp(29px,4vw,47px)/1.08 'Trebuchet MS','Segoe UI',sans-serif;letter-spacing:-.045em;margin:0;max-width:720px}
+h1 .accent{color:var(--mint)}
+.hero-copy{color:#b7bfd8;font-size:14px;line-height:1.65;max-width:610px;margin:13px 0 0}
+.hero-badge{padding:12px 15px;background:linear-gradient(135deg,rgba(169,155,255,.14),rgba(119,243,195,.08));border:1px solid rgba(169,155,255,.25);border-radius:18px;min-width:158px;text-align:center}
+.hero-badge strong{display:block;color:var(--yellow);font:700 24px 'Trebuchet MS','Segoe UI',sans-serif}
+.hero-badge span{display:block;margin-top:2px;font-size:10px;letter-spacing:.12em;color:#c5cbe2;text-transform:uppercase}
+.team-section{padding:17px 18px 18px;border:1px solid var(--line);border-radius:23px;background:rgba(21,29,55,.75);box-shadow:0 12px 35px rgba(0,0,0,.1);margin-bottom:22px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.section-title{font:700 14px 'Trebuchet MS','Segoe UI',sans-serif;letter-spacing:.015em}
+.section-hint{font-size:11px;color:var(--muted)}
+.teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.team-card{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:center;padding:11px 12px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.035);transition:border .2s,background .2s,transform .2s}
+.team-card.active{border-color:rgba(119,243,195,.78);background:linear-gradient(110deg,rgba(119,243,195,.12),rgba(119,243,195,.035));box-shadow:inset 0 0 0 1px rgba(119,243,195,.06)}
+.team-main{display:flex;align-items:center;gap:10px;min-width:0}
+.team-avatar{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;color:#11162b;background:var(--team-color,var(--mint));font-weight:900;font-size:15px}
+.team-name-input{min-width:0;width:100%;border:0;outline:none;color:#fff;background:transparent;font-weight:800;font-size:13px;padding:4px 0}
+.team-name-input:focus{box-shadow:0 2px var(--mint)}
+.team-state{font-size:10px;color:var(--muted);margin-top:2px}
+.team-score{font:700 24px 'Trebuchet MS','Segoe UI',sans-serif;color:white;text-align:right;line-height:1}
+.team-score small{display:block;color:#9ca7c8;font:700 9px 'Segoe UI',Arial,sans-serif;text-transform:uppercase;letter-spacing:.14em;margin-top:5px}
+.team-activate{grid-column:1/-1;border:0;border-radius:10px;padding:8px;background:rgba(255,255,255,.06);color:#bdc5df;font-size:11px;font-weight:800;transition:background .2s,color .2s}
+.team-card.active .team-activate{background:var(--mint);color:#14213a}
+.team-tools{display:flex;justify-content:flex-end;margin-top:12px}
+.small-btn{border:1px solid rgba(255,255,255,.15);background:transparent;color:#c8d0e8;border-radius:11px;padding:8px 11px;font-size:11px;font-weight:700;transition:background .2s,transform .2s}
+.small-btn:hover:not(:disabled){background:#ffffff12;transform:translateY(-1px)}
+.main-grid{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);gap:20px;align-items:stretch}
+.panel{border:1px solid var(--line);border-radius:28px;background:linear-gradient(155deg,rgba(25,34,64,.97),rgba(17,24,47,.98));box-shadow:var(--shadow);min-width:0}
+.wheel-panel{padding:23px 24px 22px;display:flex;flex-direction:column;align-items:center;overflow:hidden;position:relative}
+.wheel-panel:before{content:'';position:absolute;width:330px;height:330px;top:95px;left:50%;transform:translateX(-50%);border-radius:50%;background:rgba(108,99,255,.1);filter:blur(50px);pointer-events:none}
+.panel-top{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1}
+.panel-heading{font:700 16px 'Trebuchet MS','Segoe UI',sans-serif}
+.panel-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.count-chip{border-radius:999px;background:rgba(119,243,195,.1);color:var(--mint);padding:7px 10px;font-size:11px;font-weight:800;white-space:nowrap}
+.wheel-wrap{width:min(100%,440px);aspect-ratio:1;position:relative;margin:17px auto 8px;z-index:1;display:grid;place-items:center}
+.wheel-wrap:before{content:'';position:absolute;inset:2%;border-radius:50%;border:7px solid #e9ecff;box-shadow:0 0 0 5px rgba(119,243,195,.25),0 16px 40px rgba(0,0,0,.3)}
+#wheelCanvas{display:block;width:94%;height:94%;border-radius:50%;transform:rotate(0deg);transition:transform 5s cubic-bezier(.12,.82,.13,1);filter:drop-shadow(0 11px 16px rgba(0,0,0,.2))}
+.pointer{position:absolute;z-index:3;top:-5px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:17px solid transparent;border-right:17px solid transparent;border-top:35px solid var(--yellow);filter:drop-shadow(0 4px 5px rgba(0,0,0,.3))}
+.wheel-hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:83px;height:83px;border:6px solid #eaf0ff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#292f59,#121a32);box-shadow:0 8px 23px #0006;pointer-events:none}
+.wheel-hub strong{font:800 20px 'Trebuchet MS','Segoe UI',sans-serif;letter-spacing:-.04em;color:white}
+.wheel-hub span{font-size:8px;letter-spacing:.16em;color:var(--mint);font-weight:800;margin-top:1px}
+.wheel-caption{font-size:11px;color:#aeb7d3;text-align:center;margin:5px 0 15px;line-height:1.55}
+.spin-btn{width:min(100%,350px);border:0;border-radius:16px;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(105deg,#7af1c3,#b7f7d8);color:#10203a;font-weight:900;font-size:14px;letter-spacing:.025em;box-shadow:0 8px 0 #329f85,0 15px 30px rgba(64,220,171,.15);transition:transform .2s,box-shadow .2s,filter .2s}
+.spin-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 0 #329f85,0 20px 36px rgba(64,220,171,.22);filter:saturate(1.1)}
+.spin-btn:active:not(:disabled){transform:translateY(4px);box-shadow:0 3px 0 #329f85}
+.spin-symbol{font-size:18px;display:inline-block}
+.rules-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:23px}
+.rule{display:flex;align-items:center;gap:8px;padding:10px 8px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:rgba(255,255,255,.025);min-width:0}
+.rule-icon{width:28px;height:28px;flex:0 0 auto;display:grid;place-items:center;border-radius:9px;background:#ffffff0b;font-size:14px}
+.rule strong{display:block;font-size:10px;color:#f4f5ff}
+.rule span{display:block;color:#a4afcf;font-size:9px;line-height:1.3;margin-top:3px}
+.question-panel{background:var(--paper);color:var(--ink);padding:25px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.question-panel:after{content:'?';position:absolute;right:-4px;top:8px;color:rgba(110,107,216,.06);font:700 180px/1 'Trebuchet MS','Segoe UI',sans-serif;pointer-events:none}
+.q-top{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:1}
+.q-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:#7b7e9a}
+.category-pill{background:#e9e8ff;color:#5c56b9;padding:8px 10px;border-radius:999px;font-size:10px;font-weight:900;max-width:55%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+.question-main{position:relative;z-index:1;margin:31px 0 18px;min-height:175px;display:flex;flex-direction:column;justify-content:center}
+.question-number{font:700 12px 'Trebuchet MS','Segoe UI',sans-serif;color:#8489a8;margin-bottom:12px}
+.question-text{font:700 clamp(23px,2.2vw,30px)/1.25 'Trebuchet MS','Segoe UI',sans-serif;letter-spacing:-.035em;color:#202641;overflow-wrap:anywhere}
+.question-note{color:#7e849e;font-size:12px;line-height:1.6;margin-top:13px}
+.answer-toggle{align-self:flex-start;border:0;background:transparent;color:#615bc0;font-size:12px;font-weight:900;padding:7px 0;margin-bottom:12px;position:relative;z-index:1}
+.answer-toggle:hover{text-decoration:underline}
+.answer-box{padding:14px 15px;border-radius:15px;background:#eeefff;border:1px solid #e0e1ff;margin-bottom:14px;position:relative;z-index:1;animation:popIn .24s ease both}
+.answer-box .answer-title{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:#706bb2;margin-bottom:6px}
+.answer-box p{margin:0;font-size:13px;line-height:1.65;color:#343956}
+.answer-box[hidden]{display:none}
+.mark-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;position:relative;z-index:1}
+.mark-btn{border:0;border-radius:14px;padding:13px 12px;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .18s,filter .18s,box-shadow .18s}
+.mark-btn:hover:not(:disabled){transform:translateY(-2px);filter:saturate(1.12)}
+.correct-btn{background:#c9f8e5;color:#145b4b;box-shadow:inset 0 -3px #92dfc0}
+.wrong-btn{background:#ffe0e7;color:#973d55;box-shadow:inset 0 -3px #f3b3c2}
+.feedback{margin-top:13px;border-radius:13px;padding:12px 13px;display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.5;font-weight:700;position:relative;z-index:1;animation:popIn .25s ease both}
+.feedback[hidden]{display:none}
+.feedback.good{background:#e3f9ee;color:#176b4f}
+.feedback.bad{background:#fff0f3;color:#993e58}
+.feedback.neutral{background:#eeefff;color:#545aa0}
+.feedback-icon{font-size:18px;line-height:1}
+.question-footer{margin-top:19px;padding-top:16px;border-top:1px solid #e7e8f4;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#8288a1;font-size:10px;position:relative;z-index:1}
+.question-footer strong{color:#555b78;font-size:11px}
+.progress-line{width:100%;height:6px;border-radius:99px;background:#e7e9f5;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#7068ed,#7cf1c5);transition:width .45s ease}
+.progress-wrap{margin-top:14px;position:relative;z-index:1}
+.progress-label{display:flex;justify-content:space-between;color:#7e849e;font-size:10px;font-weight:700}
+.game-over{margin-top:15px;padding:17px;border:1px solid #dce0ff;border-radius:17px;background:linear-gradient(130deg,#f0f0ff,#e5fbf3);text-align:center;animation:popIn .3s ease both}
+.game-over[hidden]{display:none}
+.game-over h3{font:700 21px 'Trebuchet MS','Segoe UI',sans-serif;margin:0 0 7px;color:#282c4c}
+.game-over p{font-size:12px;line-height:1.5;color:#626783;margin:0 0 13px}
+.secondary-light{border:0;padding:10px 14px;background:#252c4d;color:#fff;border-radius:11px;font-size:12px;font-weight:800}
+.footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 2px 0;color:#8994b7;font-size:10px;line-height:1.5}
+.footer strong{color:#bdc6e0}
+.spark{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--mint);pointer-events:none;opacity:0;animation:sparkFloat 1s ease-out forwards;z-index:20}
+@keyframes popIn{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes sparkFloat{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-1deg)}75%{transform:rotate(1deg)}}
+.wheel-wrap.spinning{animation:wobble .27s linear infinite}
+@media(max-width:900px){.main-grid{grid-template-columns:1fr}.wheel-panel{padding:21px}.wheel-wrap{width:min(100%,420px)}.question-panel{min-height:470px}.question-main{min-height:145px}.hero{align-items:flex-start}.hero-badge{margin-top:8px}}
+@media(max-width:600px){.app{width:min(100% - 22px,520px);padding-top:15px}.topbar{align-items:flex-start;margin-bottom:24px}.brand-mark{width:42px;height:42px;font-size:23px;border-radius:14px}.brand-title{font-size:14px}.brand-sub{font-size:9px;letter-spacing:.08em;line-height:1.4}.top-actions .pill{display:none}.hero{display:block;margin-bottom:18px}.hero-badge{display:inline-block;margin-top:17px;padding:9px 14px}.hero-badge strong{font-size:20px}.hero-badge span{font-size:9px}.hero-copy{font-size:13px}.team-section{padding:14px;border-radius:19px}.teams{grid-template-columns:1fr}.team-card{padding:10px}.section-hint{max-width:130px;text-align:right;line-height:1.4}.wheel-panel{padding:18px 13px;border-radius:23px}.panel-heading{font-size:15px}.wheel-wrap{width:min(100%,370px);margin:16px auto 8px}.wheel-wrap:before{border-width:5px}.pointer{border-left-width:14px;border-right-width:14px;border-top-width:29px;top:-3px}.wheel-hub{width:68px;height:68px;border-width:5px}.wheel-hub strong{font-size:17px}.wheel-hub span{font-size:7px}.wheel-caption{font-size:10px;margin-bottom:14px;padding:0 8px}.spin-btn{padding:15px;font-size:13px}.rules-row{gap:6px;margin-top:19px}.rule{display:block;padding:8px 7px;text-align:center}.rule-icon{margin:0 auto 6px}.rule strong{font-size:9px}.rule span{font-size:8px}.question-panel{padding:20px 17px;border-radius:23px;min-height:430px}.question-main{margin:25px 0 15px;min-height:135px}.question-text{font-size:26px}.category-pill{font-size:9px;padding:7px 8px}.mark-btn{padding:13px 8px;font-size:12px}.question-footer{font-size:9px}.footer{align-items:flex-start;flex-direction:column;gap:5px;padding-bottom:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">🎡</div>
+      <div>
+        <div class="brand-title">STW <span style="color:var(--mint)">REVIEW ROOM</span></div>
+        <div class="brand-sub">IT311 · Cyber Security Threats</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="pill"><span class="pill-dot"></span> GROUP GAME MODE</div>
+      <button class="icon-btn" id="soundToggle" aria-label="Turn sound off" title="Toggle sound">🔊</button>
+      <button class="icon-btn" id="resetBtn" aria-label="Reset game" title="Reset game">↻</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Spin · Think · Score</div>
+      <h1>Spin the Wheel <span class="accent">Reviewer.</span></h1>
+      <p class="hero-copy">Ready na ba ang cyber-sense mo? Spin the wheel, answer out loud, then mark it <strong style="color:var(--mint)">Correct</strong> or <strong style="color:#ff9ab0">Wrong</strong>. Correct answers earn a point and leave the wheel. Wrong answers stay in the pool for another round!</p>
+    </div>
+    <div class="hero-badge"><strong id="heroQuestionCount">36</strong><span>review questions</span></div>
+  </section>
+
+  <section class="team-section" aria-label="Team scores">
+    <div class="section-head">
+      <div class="section-title">🏆 Team scoreboard</div>
+      <div class="section-hint">Tap “Make Active” to choose a turn</div>
+    </div>
+    <div class="teams" id="teams"></div>
+    <div class="team-tools"><button class="small-btn" id="addTeamBtn">＋ Add Team <span id="teamCountLabel">(2/4)</span></button></div>
+  </section>
+
+  <main class="main-grid">
+    <section class="panel wheel-panel" aria-label="Question wheel">
+      <div class="panel-top">
+        <div><div class="panel-heading">The question wheel</div><div class="panel-sub">Your next IT311 challenge is one spin away.</div></div>
+        <div class="count-chip"><span id="remainingCount">36</span> LEFT</div>
+      </div>
+      <div class="wheel-wrap" id="wheelWrap">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheelCanvas" width="720" height="720" aria-label="Colorful wheel with numbered question slices"></canvas>
+        <div class="wheel-hub"><strong>IT311</strong><span>CYBER SAFE</span></div>
+      </div>
+      <p class="wheel-caption">The numbers on the wheel are question cards. The wheel keeps missed questions in play.</p>
+      <button class="spin-btn" id="spinBtn"><span class="spin-symbol">✦</span><span id="spinBtnText">SPIN THE WHEEL</span><span class="spin-symbol">✦</span></button>
+      <div class="rules-row">
+        <div class="rule"><div class="rule-icon">🎡</div><div><strong>1. SPIN</strong><span>Get a question</span></div></div>
+        <div class="rule"><div class="rule-icon">🧠</div><div><strong>2. ANSWER</strong><span>Discuss as a group</span></div></div>
+        <div class="rule"><div class="rule-icon">✅</div><div><strong>3. SCORE</strong><span>Correct = +1 point</span></div></div>
+      </div>
+    </section>
+
+    <section class="panel question-panel" aria-label="Question and answer">
+      <div class="q-top">
+        <div class="q-label" id="qLabel">YOUR CHALLENGE</div>
+        <div class="category-pill" id="categoryPill">READY TO PLAY</div>
+      </div>
+      <div class="question-main" id="questionMain" aria-live="polite">
+        <div class="question-number" id="questionNumber">LET'S GET STARTED</div>
+        <div class="question-text" id="questionText">Ready to test your cyber-sense?</div>
+        <div class="question-note" id="questionNote">Tap “Spin the Wheel” and answer the question without peeking. You got this!</div>
+      </div>
+      <button class="answer-toggle" id="answerToggle" hidden>＋ Reveal answer</button>
+      <div class="answer-box" id="answerBox" hidden>
+        <div class="answer-title">Suggested answer</div>
+        <p id="answerText"></p>
+      </div>
+      <div class="mark-row">
+        <button class="mark-btn correct-btn" id="correctBtn" disabled>✓ Correct</button>
+        <button class="mark-btn wrong-btn" id="wrongBtn" disabled>✕ Wrong</button>
+      </div>
+      <div class="feedback neutral" id="feedback" hidden><span class="feedback-icon" id="feedbackIcon">💡</span><span id="feedbackText"></span></div>
+      <div class="game-over" id="gameOver" hidden>
+        <h3>Wheel cleared! 🎉</h3>
+        <p id="gameOverText">Every question has been answered correctly.</p>
+        <button class="secondary-light" id="playAgainBtn">Play another round ↻</button>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Reviewer progress</span><strong id="progressText">0 of 36 completed</strong></div>
+        <div class="progress-line"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+      <div class="question-footer"><span>Based on your uploaded <strong>IT311 Modern Taglish Reviewer</strong></span><span id="turnFooter">Team Alpha's turn</span></div>
+    </section>
+  </main>
+
+  <footer class="footer"><span><strong>Study smart, play fair.</strong> Explain your answer in your own words.</span><span>Self-contained HTML · Works offline after the page loads</span></footer>
+</div>
+<script>
+const questionBank = [
+  {id:1,category:'Basic Terms',short:'CISA',question:'What does CISA stand for?',answer:'CISA stands for Cybersecurity and Infrastructure Security Agency. It is a U.S. government agency that helps protect critical infrastructure from physical and cyber threats.'},
+  {id:2,category:'Basic Terms',short:'Nation-State',question:'What is a nation-state cyber threat?',answer:'A cyberattack supported, funded, or directed by a government to reach political, economic, or strategic goals.'},
+  {id:3,category:'Basic Terms',short:'APT',question:'What is an Advanced Persistent Threat (APT)?',answer:'A sophisticated cyberattack in which an attacker secretly enters a network and stays there for a long time to gather information or prepare an attack.'},
+  {id:4,category:'Attack Types',short:'Espionage',question:'What is cyber espionage?',answer:'The theft of secret information, such as military plans or company secrets.'},
+  {id:5,category:'Key Concepts',short:'Infrastructure',question:'What is critical infrastructure? Give two examples.',answer:'Essential systems society depends on, such as electricity, water supply, transportation, telecommunications, and government services.'},
+  {id:6,category:'Attack Techniques',short:'LOTL',question:'What does “Living Off the Land” mean in a cyberattack?',answer:'Using legitimate tools already available on a computer or network to avoid detection.'},
+  {id:7,category:'Nation-State Examples',short:'Volt Typhoon',question:'Volt Typhoon is linked to which country, and what does it target?',answer:'It is a China-linked cyberactor described in the reviewer as targeting critical infrastructure networks, including telecommunications, energy, transportation, water, and government-related infrastructure.'},
+  {id:8,category:'Nation-State Examples',short:'Shamoon',question:'Which malware was used in the 2012 Saudi Aramco attack?',answer:'Shamoon. The reviewer says it destroyed data on approximately 35,000 computers.'},
+  {id:9,category:'Nation-State Examples',short:'RasGas',question:'What happened during the RasGas attack in 2012?',answer:'A cyberattack affected the IT systems of a natural-gas company in Qatar.'},
+  {id:10,category:'Nation-State Examples',short:'CyberAv3ngers',question:'Which Iran-linked actors targeted industrial control devices used in water systems and other industries?',answer:'CyberAv3ngers.'},
+  {id:11,category:'Nation-State Examples',short:'Bangladesh Bank',question:'What was the result of the Bangladesh Bank heist in 2016?',answer:'A North Korea-linked cyber-enabled theft resulted in approximately $81 million being stolen; an even larger amount was attempted.'},
+  {id:12,category:'Malware',short:'WannaCry',question:'What is WannaCry, and what did it do in 2017?',answer:'WannaCry was ransomware that spread to computers in many countries and encrypted files to demand a ransom.'},
+  {id:13,category:'Nation-State Examples',short:'Sony Pictures',question:'Name two effects of the Sony Pictures attack in 2014.',answer:'Confidential files were stolen, internal communications were leaked, and computer data was destroyed.'},
+  {id:14,category:'Nation-State Examples',short:'Ukraine Grid',question:'What happened in the Ukraine Power Grid attack in 2015?',answer:'The cyberattack caused a power outage that affected approximately 230,000 people.'},
+  {id:15,category:'Malware',short:'NotPetya',question:'What was NotPetya, and what was its major impact?',answer:'A destructive malware incident in 2017 that spread internationally and caused billions of dollars in damage.'},
+  {id:16,category:'Attack Types',short:'SolarWinds',question:'Why is the 2020 SolarWinds incident an example of a supply-chain attack?',answer:'Malicious code was inserted into legitimate software updates, allowing attackers to access customer networks.'},
+  {id:17,category:'Nation-State Examples',short:'Viasat',question:'What did the Viasat attack in 2022 affect?',answer:'A satellite communication network, affecting internet connectivity and some organizations.'},
+  {id:18,category:'Attack Types',short:'Infrastructure',question:'Which type of nation-state cyberattack targets electricity, water, transport, or communication systems to disrupt services?',answer:'Critical infrastructure disruption.'},
+  {id:19,category:'Prevention',short:'Endpoint Security',question:'What is endpoint security?',answer:'Protection for computers, laptops, and mobile devices against malware.'},
+  {id:20,category:'Prevention',short:'MFA',question:'What is Multi-Factor Authentication (MFA)?',answer:'An extra security verification step beyond a password.'},
+  {id:21,category:'Prevention',short:'Patch Management',question:'What is patch management, and why is it important?',answer:'Regularly updating software to close security vulnerabilities.'},
+  {id:22,category:'Prevention',short:'Education',question:'What should employee education help people recognize?',answer:'Phishing attempts and social engineering.'},
+  {id:23,category:'Cyber Terrorism',short:'Cyber Terrorism',question:'What is cyber terrorism?',answer:'Using computers or networks to create fear, panic, serious disruption, or real-world harm to advance political, ideological, or religious goals.'},
+  {id:24,category:'Attack Types',short:'DDoS',question:'What is a DDoS attack?',answer:'A Distributed Denial-of-Service attack. Many sources send excessive traffic to overload a website or network.'},
+  {id:25,category:'Know the Difference',short:'Crime vs Cause',question:'What is the difference between cybercrime and hacktivism?',answer:'Cybercrime is commonly motivated by money or personal gain. Hacktivism uses hacking to support a political, social, or ethical cause.'},
+  {id:26,category:'Know the Difference',short:'Cyber Warfare',question:'What is cyber warfare?',answer:'Cyberattacks used by states against other states, commonly connected with conflict.'},
+  {id:27,category:'Attack Types',short:'Malware',question:'What is malware?',answer:'A general term for malicious software used to damage systems, steal data, or gain unauthorized access.'},
+  {id:28,category:'Attack Types',short:'Phishing',question:'What is phishing?',answer:'A fake email or message designed to trick someone into sharing sensitive information or opening a malicious file.'},
+  {id:29,category:'Attack Types',short:'Ransomware',question:'How does ransomware affect a victim?',answer:'It locks or encrypts files and demands a ransom to restore access.'},
+  {id:30,category:'Attack Types',short:'MITM',question:'What happens in a Man-in-the-Middle (MITM) attack?',answer:'An attacker secretly interferes with communication between two parties to view or obtain their information.'},
+  {id:31,category:'Attack Types',short:'Data Breach',question:'What is a data breach?',answer:'Unauthorized access to confidential information, such as passwords, personal details, or financial records.'},
+  {id:32,category:'Attack Types',short:'Spyware',question:'What does spyware do?',answer:'It secretly monitors activities and collects personal information.'},
+  {id:33,category:'Attack Types',short:'Supply Chain',question:'What is a supply-chain attack?',answer:'An attack on a software provider or supplier in order to reach its customers. SolarWinds is the reviewer’s example.'},
+  {id:34,category:'History',short:'Melissa Virus',question:'How did the Melissa Virus spread in 1999, and what did it affect?',answer:'It spread through Word documents and email contacts, causing email-system disruptions.'},
+  {id:35,category:'History',short:'Estonia',question:'What were the effects of the Estonia cyberattacks in 2007?',answer:'DDoS attacks affected government agencies, businesses, and banking services.'},
+  {id:36,category:'History',short:'Water Plant',question:'What happened in the Florida Water Treatment Plant incident in 2021?',answer:'An attacker tried to change the water supply’s chemical level to a dangerous level, but the operator noticed and corrected it.'},
+  {id:37,category:'Basic Terms',short:'Cyber Threats',question:'What are cyber security threats?',answer:'Harmful online activities that aim to steal data, damage files, or disrupt computer systems.'}
+];
+
+const palette = ['#ff6b83','#ffc857','#37d6b0','#6d79ff','#ff91d2','#3dc6ed','#ff9369','#a99bff'];
+const teams = [{name:'Team Alpha',score:0},{name:'Team Bravo',score:0}];
+let remaining = [...questionBank];
+let currentQuestion = null;
+let currentAnswered = false;
+let activeTeam = 0;
+let wrongAttempts = 0;
+let rotationDeg = 0;
+let isSpinning = false;
+let lastSpunId = null;
+let soundOn = true;
+let audioContext = null;
+let spinTickTimer = null;
+let spinTickCount = 0;
+
+const $ = id => document.getElementById(id);
+const canvas = $('wheelCanvas');
+const ctx = canvas.getContext('2d');
+const wheelWrap = $('wheelWrap');
+
+function escapeHTML(value){return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));}
+function setupAudio(){
+  if(!soundOn)return null;
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if(!AudioCtx)return null;
+  if(!audioContext)audioContext = new AudioCtx();
+  if(audioContext.state === 'suspended')audioContext.resume();
+  return audioContext;
+}
+function tone(frequency, duration=.11, type='sine', volume=.045, delay=0, endFrequency=null){
+  const ac = setupAudio();
+  if(!ac)return;
+  const oscillator = ac.createOscillator();
+  const gain = ac.createGain();
+  const start = ac.currentTime + delay;
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency,start);
+  if(endFrequency)oscillator.frequency.exponentialRampToValueAtTime(Math.max(1,endFrequency),start+duration);
+  gain.gain.setValueAtTime(.0001,start);
+  gain.gain.exponentialRampToValueAtTime(volume,start+.012);
+  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+  oscillator.connect(gain);gain.connect(ac.destination);
+  oscillator.start(start);oscillator.stop(start+duration+.025);
+}
+function soundCorrect(){tone(523,.13,'sine',.045,0);tone(659,.14,'sine',.045,.1);tone(784,.2,'sine',.05,.2);}
+function soundWrong(){tone(230,.18,'triangle',.045,0,145);tone(165,.2,'triangle',.035,.13,110);}
+function soundWin(){[523,659,784,1046].forEach((freq,i)=>tone(freq,.2,'sine',.045,i*.12));}
+function startSpinSound(){tone(170,.4,'sawtooth',.022,0,430);spinTickCount=0;clearInterval(spinTickTimer);spinTickTimer=setInterval(()=>{if(!soundOn||spinTickCount>=18){clearInterval(spinTickTimer);return;}const freq=280+Math.min(spinTickCount,13)*23;tone(freq,.035,'square',.012);spinTickCount++;},190);}
+function stopSpinSound(){clearInterval(spinTickTimer);spinTickTimer=null;}
+
+function drawWheel(){
+  const size = canvas.width;
+  const c = size/2;
+  const r = size*.485;
+  ctx.clearRect(0,0,size,size);
+  ctx.save();
+  ctx.beginPath();ctx.arc(c,c,r,0,Math.PI*2);ctx.fillStyle='#111936';ctx.fill();ctx.restore();
+  if(!remaining.length){
+    ctx.beginPath();ctx.arc(c,c,r*.98,0,Math.PI*2);ctx.fillStyle='#20294a';ctx.fill();
+    ctx.fillStyle='#f7f8ff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 35px "Space Grotesk", sans-serif';ctx.fillText('DONE!',c,c-5);
+    ctx.font='600 17px "DM Sans", sans-serif';ctx.fillStyle='#91f4cf';ctx.fillText('WHEEL CLEARED',c,c+33);return;
+  }
+  const slice = Math.PI*2/remaining.length;
+  remaining.forEach((item,index)=>{
+    const start = -Math.PI/2 + index*slice;
+    const end = start + slice;
+    ctx.beginPath();ctx.moveTo(c,c);ctx.arc(c,c,r,start,end);ctx.closePath();
+    ctx.fillStyle=palette[(item.id-1)%palette.length];ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.88)';ctx.lineWidth=3;ctx.stroke();
+    const mid=start+slice/2;
+    const labelR=r*.68;
+    const x=c+Math.cos(mid)*labelR;const y=c+Math.sin(mid)*labelR;
+    ctx.save();ctx.translate(x,y);ctx.rotate(mid+Math.PI/2);
+    if(mid>Math.PI/2&&mid<Math.PI*1.5)ctx.rotate(Math.PI);
+    const fontSize=remaining.length>28?18:remaining.length>20?20:remaining.length>12?23:28;
+    ctx.font=`800 ${fontSize}px "DM Sans", sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineWidth=4;ctx.strokeStyle='rgba(19,25,49,.34)';
+    ctx.strokeText(String(item.id).padStart(2,'0'),0,0);ctx.fillStyle='#fff';ctx.fillText(String(item.id).padStart(2,'0'),0,0);
+    ctx.restore();
+  });
+  ctx.beginPath();ctx.arc(c,c,r,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.95)';ctx.lineWidth=7;ctx.stroke();
+}
+
+function renderTeams(){
+  $('teams').innerHTML=teams.map((team,index)=>{
+    const isActive=index===activeTeam;
+    const color=palette[(index+2)%palette.length];
+    return `<div class="team-card ${isActive?'active':''}" style="--team-color:${color}">
+      <div class="team-main"><div class="team-avatar">${escapeHTML((team.name.trim()[0]||'T').toUpperCase())}</div><div style="min-width:0;flex:1"><input class="team-name-input" data-rename="${index}" value="${escapeHTML(team.name)}" maxlength="22" aria-label="Team ${index+1} name"><div class="team-state">${isActive?'✦ PLAYING THIS TURN':'Waiting for turn'}</div></div></div>
+      <div class="team-score">${team.score}<small>POINTS</small></div>
+      <button class="team-activate" data-activate="${index}" ${isActive|| (currentQuestion&&!currentAnswered)||isSpinning?'disabled':''}>${isActive?'● ACTIVE TEAM':'Make Active'}</button>
+    </div>`;
+  }).join('');
+  $('teamCountLabel').textContent=`(${teams.length}/4)`;
+  $('addTeamBtn').disabled=teams.length>=4 || (currentQuestion&&!currentAnswered) || isSpinning;
+  $('turnFooter').textContent=`${teams[activeTeam].name}'s turn`;
+}
+
+function renderStats(){
+  const completed=questionBank.length-remaining.length;
+  $('remainingCount').textContent=remaining.length;
+  $('heroQuestionCount').textContent=questionBank.length;
+  $('progressText').textContent=`${completed} of ${questionBank.length} completed`;
+  $('progressFill').style.width=`${completed/questionBank.length*100}%`;
+  $('spinBtnText').textContent=remaining.length===0?'ROUND COMPLETE':(currentQuestion&&!currentAnswered?'ANSWER THIS QUESTION FIRST':currentQuestion?'SPIN ANOTHER QUESTION':'SPIN THE WHEEL');
+  $('spinBtn').disabled=isSpinning || remaining.length===0 || Boolean(currentQuestion&&!currentAnswered);
+  $('correctBtn').disabled=!currentQuestion||currentAnswered||isSpinning;
+  $('wrongBtn').disabled=!currentQuestion||currentAnswered||isSpinning;
+  $('answerToggle').hidden=!currentQuestion;
+  $('gameOver').hidden=remaining.length!==0;
+  $('addTeamBtn').disabled=teams.length>=4 || (currentQuestion&&!currentAnswered) || isSpinning;
+}
+
+function renderIdle(){
+  currentQuestion=null;currentAnswered=false;
+  $('qLabel').textContent='YOUR CHALLENGE';$('categoryPill').textContent='READY TO PLAY';
+  $('questionNumber').textContent='LET’S GET STARTED';$('questionText').textContent='Ready to test your cyber-sense?';
+  $('questionNote').textContent='Tap “Spin the Wheel” and answer the question without peeking. You got this!';
+  $('answerBox').hidden=true;$('answerToggle').hidden=true;$('answerToggle').textContent='＋ Reveal answer';
+  $('feedback').hidden=true;$('gameOver').hidden=true;
+  renderStats();renderTeams();
+}
+function renderQuestion(q){
+  currentQuestion=q;currentAnswered=false;
+  $('qLabel').textContent=`QUESTION CARD · #${String(q.id).padStart(2,'0')}`;
+  $('categoryPill').textContent=q.category;
+  $('questionNumber').textContent=`QUESTION ${String(q.id).padStart(2,'0')} / ${String(questionBank.length).padStart(2,'0')}`;
+  $('questionText').textContent=q.question;
+  $('questionNote').textContent='Answer out loud first. Need a hint? Reveal the suggested answer before scoring.';
+  $('answerText').textContent=q.answer;$('answerBox').hidden=true;
+  $('answerToggle').hidden=false;$('answerToggle').textContent='＋ Reveal answer';
+  $('feedback').hidden=true;$('gameOver').hidden=true;
+  renderStats();renderTeams();
+}
+function showFeedback(type,icon,message){
+  $('feedback').className=`feedback ${type}`;$('feedbackIcon').textContent=icon;$('feedbackText').textContent=message;$('feedback').hidden=false;
+}
+function randomQuestion(){
+  let pool=remaining;
+  if(lastSpunId!==null&&remaining.length>1)pool=remaining.filter(q=>q.id!==lastSpunId);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function spinWheel(){
+  if(isSpinning||!remaining.length||(currentQuestion&&!currentAnswered))return;
+  const chosen=randomQuestion();
+  const index=remaining.findIndex(q=>q.id===chosen.id);
+  if(index<0)return;
+  isSpinning=true;
+  renderTeams();renderStats();
+  $('spinBtnText').textContent='SPINNING…';
+  $('spinBtn').disabled=true;
+  $('feedback').hidden=true;$('answerBox').hidden=true;
+  $('answerToggle').textContent='＋ Reveal answer';
+  wheelWrap.classList.add('spinning');
+  startSpinSound();
+  const sliceDeg=360/remaining.length;
+  const targetMod=((-(index+.5)*sliceDeg)%360+360)%360;
+  const currentMod=((rotationDeg%360)+360)%360;
+  const delta=(targetMod-currentMod+360)%360;
+  rotationDeg += 360*5+delta;
+  canvas.style.transform=`rotate(${rotationDeg}deg)`;
+  let completed=false;
+  const finish=()=>{
+    if(completed)return;completed=true;
+    isSpinning=false;stopSpinSound();wheelWrap.classList.remove('spinning');
+    lastSpunId=chosen.id;
+    renderQuestion(chosen);renderTeams();renderStats();
+    tone(660,.12,'sine',.035);
+    burstConfetti(wheelWrap,10);
+  };
+  canvas.addEventListener('transitionend',finish,{once:true});
+  setTimeout(finish,5400);
+}
+
+function answerQuestion(isCorrect){
+  if(!currentQuestion||currentAnswered||isSpinning)return;
+  const q=currentQuestion;
+  const scoringTeam=activeTeam;
+  currentAnswered=true;
+  $('answerBox').hidden=false;$('answerToggle').hidden=true;
+  if(isCorrect){
+    teams[scoringTeam].score++;
+    remaining=remaining.filter(item=>item.id!==q.id);
+    showFeedback('good','🎉',`Correct! +1 point for ${teams[scoringTeam].name}. This question leaves the wheel. Turn passes to the next team.`);
+    soundCorrect();burstConfetti($('questionMain'),22);
+  }else{
+    wrongAttempts++;
+    showFeedback('bad','🔁',`Not quite! This question stays in the wheel, so it can come back later. No point this turn. Turn passes to the next team.`);
+    soundWrong();
+  }
+  activeTeam=(activeTeam+1)%teams.length;
+  if(remaining.length===0){
+    $('gameOver').hidden=false;
+    const maxScore=Math.max(...teams.map(team=>team.score));
+    const winners=teams.filter(team=>team.score===maxScore).map(team=>team.name);
+    const winnerText=winners.length===teams.length?'It’s a tie!':`${winners.join(' & ')} ${winners.length>1?'are':'is'} ${winners.length>1?'the winners':'the winner'}!`;
+    $('gameOverText').textContent=`${winnerText} Final scores: ${teams.map(team=>`${team.name}: ${team.score}`).join(' · ')}. Wrong tries: ${wrongAttempts}.`;
+    soundWin();
+  }
+  drawWheel();renderStats();renderTeams();
+}
+
+function burstConfetti(origin,count=14){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const rect=origin.getBoundingClientRect();
+  for(let i=0;i<count;i++){
+    const dot=document.createElement('span');dot.className='spark';
+    dot.style.left=`${rect.left+rect.width*(.2+Math.random()*.6)}px`;
+    dot.style.top=`${rect.top+rect.height*(.25+Math.random()*.4)}px`;
+    dot.style.background=palette[Math.floor(Math.random()*palette.length)];
+    dot.style.setProperty('--dx',`${Math.round((Math.random()-.5)*190)}px`);
+    dot.style.setProperty('--dy',`${Math.round(-45-Math.random()*150)}px`);
+    document.body.appendChild(dot);setTimeout(()=>dot.remove(),1100);
+  }
+}
+function resetGame(){
+  stopSpinSound();isSpinning=false;rotationDeg=0;lastSpunId=null;remaining=[...questionBank];currentQuestion=null;currentAnswered=false;wrongAttempts=0;
+  teams.forEach(team=>team.score=0);activeTeam=0;
+  canvas.style.transition='none';canvas.style.transform='rotate(0deg)';
+  drawWheel();renderIdle();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{canvas.style.transition='transform 5s cubic-bezier(.12,.82,.13,1)';}));
+  tone(520,.1,'sine',.03);
+}
+
+$('spinBtn').addEventListener('click',spinWheel);
+$('correctBtn').addEventListener('click',()=>answerQuestion(true));
+$('wrongBtn').addEventListener('click',()=>answerQuestion(false));
+$('answerToggle').addEventListener('click',()=>{
+  const willShow=$('answerBox').hidden;$('answerBox').hidden=!willShow;
+  $('answerToggle').textContent=willShow?'− Hide answer':'＋ Reveal answer';
+  if(willShow)tone(500,.07,'sine',.02);
+});
+$('resetBtn').addEventListener('click',()=>{
+  if(confirm('Reset the wheel, all scores, and question progress?'))resetGame();
+});
+$('playAgainBtn').addEventListener('click',resetGame);
+$('soundToggle').addEventListener('click',()=>{
+  soundOn=!soundOn;
+  $('soundToggle').textContent=soundOn?'🔊':'🔇';
+  $('soundToggle').setAttribute('aria-label',soundOn?'Turn sound off':'Turn sound on');
+  $('soundToggle').title=soundOn?'Sound on':'Sound off';
+  if(!soundOn)stopSpinSound();else{setupAudio();tone(660,.08,'sine',.025);}
+});
+$('addTeamBtn').addEventListener('click',()=>{
+  if(teams.length>=4|| (currentQuestion&&!currentAnswered)||isSpinning)return;
+  teams.push({name:`Team ${['C','D'][teams.length-2]||teams.length+1}`,score:0});
+  renderTeams();renderStats();tone(600,.08,'sine',.025);
+});
+$('teams').addEventListener('input',event=>{
+  const idx=event.target.dataset.rename;
+  if(idx===undefined)return;
+  teams[Number(idx)].name=event.target.value.trimStart();
+  $('turnFooter').textContent=`${teams[activeTeam].name||`Team ${activeTeam+1}`}'s turn`;
+});
+$('teams').addEventListener('click',event=>{
+  const button=event.target.closest('[data-activate]');
+  if(!button||button.disabled|| (currentQuestion&&!currentAnswered)||isSpinning)return;
+  activeTeam=Number(button.dataset.activate);renderTeams();renderStats();tone(460,.07,'sine',.022);
+});
+
+drawWheel();renderIdle();
+</script>
+</body>
+</html>
